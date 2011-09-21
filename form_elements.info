@@ -1,0 +1,4 @@
+
+name = Form Elements
+description = Prints out all of the form elements in a default state.
+core = 6.x

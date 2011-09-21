@@ -1,0 +1,305 @@
+<?php
+
+/**
+ * For more informaiton about the different API controls available see:
+ * http://api.drupal.org/api/drupal/developer--topics--forms_api_reference.html/6
+ */
+
+/**
+ * Implements hook_menu() to create a URL for the form elements example.
+ */
+function form_elements_menu() {
+    $items['form_elements'] = array(
+        'title' => 'Drupal Form Elements',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('form_elements_form'),
+        'access callback' => TRUE,
+    );
+    return $items;
+}
+
+/**
+ * This is form containing every form element type available.
+ */
+function form_elements_form() {
+    // Check box
+    $form['checkbox_element'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Form elements checkbox'),
+        '#default_value' => FALSE,
+        '#description' => t('A regular checkbox.')
+    );
+
+    // Multiple checkbox
+    $form['checkboxes_element'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Form elements checkboxes'),
+        '#options' => range(0, 5),
+        '#default_value' => array(1),
+        '#description' => t('A regular set of checkboxes.')
+    );
+
+    // Date element
+    $form['date_element'] = array(
+        '#type' => 'date',
+        '#title' => t('Form elements date'),
+        '#description' => t('A regular date.')
+    );
+
+    // Fieldset containing a text field element
+    $form['fielset_element'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Form elements fieldset element'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+    );
+    // A text area inside a fieldset element
+    $form['fielset_element']['fielset_element_textfield'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Form elements textfield, in a fieldset'),
+        '#description' => t('A regular textfield, in a fieldset.')
+    );
+
+    // A file upload element
+    $form['file_element'] = array(
+        '#type' => 'file',
+        '#title' => t('Form elements file'),
+        '#description' => t('A regular file.')
+    );
+
+    // Password Element
+    $form['password_element'] = array(
+        '#type' => 'password',
+        '#title' => t('Form elements password'),
+        '#description' => t('A regular password.')
+    );
+
+    // Confirm password element
+    $form['password_confirm_element'] = array(
+        '#type' => 'password_confirm',
+        '#title' => t('Form elements password_confirm'),
+        '#description' => t('A regular password_confirm.')
+    );
+
+    // Radio element
+    $form['radio_element'] = array(
+        '#type' => 'radio',
+        '#title' => t('Form elements radio'),
+        '#default_value' => TRUE,
+        '#description' => t('A regular radio.')
+    );
+
+    // Radios element
+    $form['radios_element'] = array(
+        '#type' => 'radios',
+        '#title' => t('Form elements radios'),
+        '#options' => range(0, 5),
+        '#default_value' => 1,
+        '#description' => t('A regular set of radios.')
+    );
+
+    // Select element
+    $form['select_element'] = array(
+        '#type' => 'select',
+        '#title' => t('Form elements select'),
+        '#options' => range(0, 5),
+        '#default_value' => 1,
+        '#description' => t('A regular select.'),
+    );
+
+    // Mutli select element.
+    $form['multiple_select_element'] = array(
+        '#type' => 'select',
+        '#title' => t('Form elements multiple select'),
+        '#options' => range(0, 5),
+        '#default_value' => 1,
+        '#description' => t('A regular multiple select.'),
+        '#multiple' => TRUE
+    );
+
+    // A textfield element
+    $form['textfield_element'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Form elements textfield'),
+        '#description' => t('A regular textfield.')
+    );
+
+    // A text area element
+    $form['textarea_element'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Form elements textarea'),
+        '#description' => t('A regular textarea.')
+    );
+
+    // A weight element (usually used when sorting elements)
+    $form['weight_element'] = array(
+        '#type' => 'weight',
+        '#title' => t('Form elements weight'),
+        '#description' => t('A regular weight.')
+    );
+
+    // Data for tabledrag element
+    $rows = array(
+        array(
+            'id' => 1,
+            'person' => 'Joe Blogs',
+            'email' => 'joe@blogs.com',
+            'weight' => 0,
+        ),
+        array(
+            'id' => 2,
+            'person' => 'Jane Blogs',
+            'email' => 'jane@blogs.com',
+            'weight' => 10,
+        ),
+    );
+
+    // Tabledrag element
+    foreach ($rows as $row) {
+        $form['tabledragrows'][$row['id']]['person_' . $row['id']] = array(
+            '#type' => 'textfield',
+            '#default_value' => $row['person'],
+            '#size' => 20,
+        );
+
+        $form['tabledragrows'][$row['id']]['email_' . $row['id']] = array(
+            '#type' => 'textfield',
+            '#default_value' => $row['email'],
+            '#size' => 20,
+        );
+
+        // the weight form element.
+        $form['tabledragrows'][$row['id']]['weight_' . $row['id']] = array(
+            '#type' => 'weight',
+            '#delta' => 50,
+            '#default_value' => $row['weight'],
+            '#attributes' => array('class' => 'weight'),
+        );
+    }
+
+    // A button element
+    $form['button_element'] = array(
+        '#type' => 'button',
+        '#value' => t('Button'),
+    );
+
+    // A image button element
+    $form['image_button_element'] = array(
+        '#type' => 'image_button',
+        '#value' => t('Image Button'),
+        '#src' => 'misc/druplicon.png'
+    );
+
+    // A hidden element
+    $form['hidden_element'] = array(
+        '#type' => 'hidden',
+        '#value' => t('A hidden element'),
+    );
+
+    // A token element
+    $form['token_element'] = array(
+        '#type' => 'token',
+        '#default_value' => t('A token element'),
+    );
+
+    // A markup (HTML) element
+    $form['markup_element'] = array(
+        '#type' => 'markup',
+        '#value' => '<p>' . t('A markup element') . '</p>'
+    );
+
+    // An item element
+    $form['item_element'] = array(
+        '#type' => 'item',
+        '#title' => t('An item element'),
+        '#value' => t('An item element value')
+    );
+
+    // A value element (used internally)
+    $form['value_element'] = array(
+        '#type' => 'value',
+        '#default_value' => t('A value element')
+    );
+
+    // A submit element
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
+    );
+
+    return $form;
+}
+
+/**
+ * Implements hook_submit() for the form_elements_form() form.
+ */
+function form_elements_form_submit($form, &$form_state) {
+    // Exclude unnecessary elements.
+    unset($form_state['values']['submit'], $form_state['values']['form_id'], $form_state['values']['op'], $form_state['values']['form_token'], $form_state['values']['form_build_id']);
+
+    foreach ($form_state['values'] as $key => $value) {
+        variable_set($key, $value);
+        drupal_set_message(t('%name has value %value', array('%name' => $key, '%value' => print_r($value, TRUE))));
+    }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function form_elements_theme() {
+    return array(
+        'form_elements_form' => array(
+            'arguments' => array(
+                'form' => NULL
+            ),
+        ),
+    );
+}
+
+/**
+ * Theme for form_element_form. Used to create the tabledrag element and then
+ * render the rest of the form.
+ */
+function theme_form_elements_form($form) {
+    $table_rows = array();
+
+    if (is_array($form['tabledragrows'])) {
+        //loop through each "row" in the table array
+        foreach ($form['tabledragrows'] as $id => $row) {
+            //we are only interested in numeric keys
+            if (intval($id)) {
+                $this_row = array();
+
+                $this_row[] = drupal_render($form['tabledragrows'][$id]['person_' . $id]);
+                $this_row[] = drupal_render($form['tabledragrows'][$id]['email_' . $id]);
+
+                //Add the weight field to the row
+                $this_row[] = drupal_render($form['tabledragrows'][$id]['weight_' . $id]);
+
+                //Add the row to the array of rows
+                $table_rows[] = array('data' => $this_row, 'class' => 'draggable');
+            }
+        }
+    }
+
+    //Make sure the header count matches the column count
+    $header = array(
+        "Person",
+        "Email",
+        "Weight"
+    );
+
+
+    $form['tabledragrows'] = array(
+        '#value' => theme('table', $header, $table_rows, array('id' => 'person-email'))
+    );
+
+    $output = drupal_render($form);
+
+    // Call add_tabledrag to add and setup the JavaScript
+    // The key thing here is the first param - the table ID
+    // and the 4th param, the class of the form item which holds the weight
+    drupal_add_tabledrag('person-email', 'order', 'sibling', 'weight');
+
+    return $output;
+}
